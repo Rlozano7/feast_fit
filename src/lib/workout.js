@@ -25,6 +25,8 @@ function write(v) {
 export const getActive = read
 export const setActive = (fn) => write(typeof fn === 'function' ? fn(read()) : fn)
 export const clearActive = () => write(null)
+export const startClock = () => setActive((a) => (a && !a.startedAt ? { ...a, startedAt: Date.now() } : a))
+export const elapsedSec = (a) => (a?.startedAt ? (Date.now() - a.startedAt) / 1000 : 0)
 
 export function useActive() {
   return useSyncExternalStore((l) => { listeners.add(l); return () => listeners.delete(l) }, read)
@@ -48,7 +50,7 @@ export function startWorkout(plan) {
     name: plan.name || 'Entrenamiento libre',
     templateId: plan.templateId || null,
     routineId: plan.routineId || null,
-    startedAt: Date.now(),
+    startedAt: null, // se llena al presionar "Iniciar" (o al marcar la primera serie)
     rest: null,
     exercises: (plan.exercises || []).map((x) => newExercise(x.id, x)),
   })
@@ -127,8 +129,8 @@ export async function saveWorkout(active, userId) {
     user_id: userId,
     routine_id: active.routineId || null,
     day_name: active.name,
-    started_at: new Date(active.startedAt).toISOString(),
-    duration_sec: Math.round((Date.now() - active.startedAt) / 1000),
+    started_at: new Date(active.startedAt || Date.now()).toISOString(),
+    duration_sec: Math.round(elapsedSec(active)),
     sets_done: setsDone,
     sets_total: all.length,
     completed: setsDone === all.length && all.length > 0,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
-import { useActive } from '../lib/workout'
+import { useActive, elapsedSec } from '../lib/workout'
 import { fmtDuration } from '../lib/calc'
 import Icon from './Icon'
 
@@ -9,6 +9,7 @@ const NAV = [
   { to: '/rutinas', label: 'Rutinas', icon: 'list' },
   { to: '/historial', label: 'Historial', icon: 'clock' },
   { to: '/ejercicios', label: 'Ejercicios', icon: 'chart' },
+  { to: '/perfil', label: 'Perfil', icon: 'user' },
 ]
 
 function ActiveBar({ active }) {
@@ -19,7 +20,7 @@ function ActiveBar({ active }) {
       <span className="activebar__pulse" aria-hidden="true" />
       <span className="activebar__txt">
         <strong>{active.name}</strong>
-        <span>En curso · {fmtDuration((Date.now() - active.startedAt) / 1000)}</span>
+        <span>{active.startedAt ? `En curso · ${fmtDuration(elapsedSec(active))}` : 'Listo para iniciar'}</span>
       </span>
       <span className="activebar__go">Volver <Icon name="arrow" size={16} /></span>
     </Link>

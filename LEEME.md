@@ -6,7 +6,7 @@ Usa **el mismo proyecto de Supabase que Tráguese ese sapo**: entras con el mism
 
 ## Qué incluye
 
-- **Entrenar**: cronómetro, columnas Serie · Anterior · Kg · Reps · RPE · ✓. Lo de la vez pasada aparece como sugerencia; tócalo para copiarlo, o marca ✓ sin escribir y se llena solo.
+- **Entrenar**: al abrir una rutina puedes revisarla y ajustarla; el cronómetro empieza al presionar **Iniciar rutina**. Columnas columnas Serie · Anterior · Kg · Reps · RPE · ✓. Lo de la vez pasada aparece como sugerencia; tócalo para copiarlo, o marca ✓ sin escribir y se llena solo.
 - Descanso con cuenta regresiva, sonido y vibración (+15 s o saltar). La pantalla no se apaga mientras entrenas.
 - Agregar o quitar series y ejercicios sobre la marcha, mover ejercicios, notas por ejercicio.
 - Si cierras la app a media rutina, al volver sigue donde la dejaste.
@@ -14,6 +14,7 @@ Usa **el mismo proyecto de Supabase que Tráguese ese sapo**: entras con el mism
 - **Rutinas**: arma las tuyas (series, reps, descanso, notas) y empiézalas con un toque. Un entrenamiento libre se puede guardar como rutina.
 - También muestra la **rutina del mes del Coach** de Tráguese ese sapo para empezarla desde aquí.
 - **Historial** por mes, con el detalle de cada serie; puedes repetir o borrar un entrenamiento.
+- **Perfil**: calendario de los días que entrenaste (toca un día para ver ese entrenamiento), racha de semanas, tiempo y volumen total, y **tus medidas** (peso, grasa, músculo, cintura, etc.) con gráfica y línea de meta. Usa la misma tabla de medidas de Tráguese ese sapo.
 - **Ejercicios**: 67 ejercicios con animación y técnica (incluye 18 máquinas y poleas). Cada uno tiene récords y gráfica de progreso (1RM estimado, peso máximo, volumen y reps).
 
 ## Puesta en marcha (unos 10 minutos)

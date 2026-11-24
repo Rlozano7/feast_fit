@@ -10,6 +10,7 @@ import History from './pages/History'
 import WorkoutDetail from './pages/WorkoutDetail'
 import Exercises from './pages/Exercises'
 import ExerciseDetail from './pages/ExerciseDetail'
+import Profile from './pages/Profile'
 
 export default function App() {
   const { session } = useAuth()
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/historial/:id" element={<WorkoutDetail />} />
         <Route path="/ejercicios" element={<Exercises />} />
         <Route path="/ejercicios/:id" element={<ExerciseDetail />} />
+        <Route path="/perfil" element={<Profile />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Layout>

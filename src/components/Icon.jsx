@@ -23,6 +23,10 @@ const P = {
   dots: 'M5 12h.01M12 12h.01M19 12h.01',
   note: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3',
   copy: 'M8 8h11v12H8zM5 16V4h11',
+  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
+  next: 'M9 6l6 6-6 6',
+  flame: 'M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.5 2 1.5 3 2.5 3C11 9 11 6 12 3z',
+  ruler: 'M3 17L17 3l4 4L7 21zM7 13l2 2M10 10l2 2M13 7l2 2',
 }
 
 export default function Icon({ name, size = 20, stroke = 1.9, className = '' }) {

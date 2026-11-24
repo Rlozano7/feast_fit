@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { supabase } from '../lib/supabase'
 import { useAuth } from '../lib/auth'
 import { useWorkouts, useTemplates, useCoachRoutine, useStart } from '../lib/useData'
 import { useActive, workoutVolume } from '../lib/workout'
@@ -46,9 +45,7 @@ export default function Home() {
           <p className="eyebrow">{longDate(new Date().toISOString())}</p>
           <h1 className="display display--sm">Hola, {name || 'atleta'}</h1>
         </div>
-        <button className="icon-btn" onClick={() => confirm('¿Cerrar sesión?') && supabase.auth.signOut()} aria-label="Cerrar sesión">
-          <Icon name="logout" />
-        </button>
+        <Link to="/perfil" className="avatar avatar--sm" aria-label="Mi perfil">{(name || '?')[0].toUpperCase()}</Link>
       </header>
 
       <motion.button className="cta" whileTap={{ scale: 0.98 }}

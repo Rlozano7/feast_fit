@@ -6,7 +6,7 @@ import { useAuth } from '../lib/auth'
 import { EX_BY_ID } from '../lib/exercises'
 import { fmtDuration, fmtVolume, fmtKg, today, num } from '../lib/calc'
 import {
-  useActive, setActive, clearActive, newExercise, newSet, loadWorkouts, buildIndex,
+  useActive, setActive, clearActive, startClock, elapsedSec, newExercise, newSet, loadWorkouts, buildIndex,
   saveWorkout, findRecords, markTrainingHabit, exerciseStats, workoutVolume,
 } from '../lib/workout'
 import ExerciseMedia from '../components/ExerciseMedia'
@@ -115,6 +115,7 @@ export default function Workout() {
     const isLast = totals.done + 1 === totals.total
     upd((a) => ({
       ...a,
+      startedAt: a.startedAt || Date.now(),
       exercises: a.exercises.map((ex, i) => (i !== ei ? ex : { ...ex, sets: ex.sets.map((st, j) => (j === si ? { ...st, ...patch } : st)) })),
       rest: isLast ? null : { endsAt: Date.now() + x.rest_sec * 1000, total: x.rest_sec, name: EX_BY_ID[x.id]?.nombre },
     }))
@@ -170,7 +171,8 @@ export default function Workout() {
     nav('/')
   }
 
-  const elapsed = (Date.now() - active.startedAt) / 1000
+  const elapsed = elapsedSec(active)
+  const started = !!active.startedAt
   const pct = totals.total ? totals.done / totals.total : 0
   const m = menu != null ? active.exercises[menu] : null
 
@@ -180,13 +182,27 @@ export default function Workout() {
         <button className="icon-btn" onClick={discard} aria-label="Descartar entrenamiento"><Icon name="x" /></button>
         <div className="wbar__mid">
           <input className="wbar__name" value={active.name} onChange={(e) => upd((a) => ({ ...a, name: e.target.value }))} aria-label="Nombre del entrenamiento" maxLength={60} />
-          <span className="wbar__time">{fmtDuration(elapsed)}</span>
+          <span className={`wbar__time ${started ? '' : 'is-idle'}`}>{started ? fmtDuration(elapsed) : 'Sin iniciar'}</span>
         </div>
-        <button className="btn btn--primary btn--sm" onClick={tryFinish} disabled={saving}>{saving ? 'Guardando…' : 'Terminar'}</button>
+        {started
+          ? <button className="btn btn--primary btn--sm" onClick={tryFinish} disabled={saving}>{saving ? 'Guardando…' : 'Terminar'}</button>
+          : <button className="btn btn--primary btn--sm" onClick={startClock} disabled={!active.exercises.length}><Icon name="play" size={14} stroke={2.4} /> Iniciar</button>}
         <div className="wbar__progress"><span style={{ transform: `scaleX(${pct})` }} /></div>
       </header>
 
       {error && <p className="notice notice--err wnotice">{error}</p>}
+
+      {!started && active.exercises.length > 0 && (
+        <div className="startcard">
+          <div>
+            <strong>{active.exercises.length} ejercicios · {totals.total} series</strong>
+            <span className="muted small">Revisa la rutina, cambia o agrega ejercicios. El cronómetro empieza cuando presiones Iniciar.</span>
+          </div>
+          <motion.button className="btn btn--primary startcard__btn" whileTap={{ scale: 0.96 }} onClick={startClock}>
+            <Icon name="play" size={18} stroke={2.4} /> Iniciar rutina
+          </motion.button>
+        </div>
+      )}
 
       {active.exercises.length === 0 ? (
         <div className="card empty-state wempty">
